@@ -1,44 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# firebase-blog
+A blog hosting web application using firebase and react.js
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+You can view [Manual test plan](https://github.com/NeoWu1216/firebase-blog/blob/master/test/Manual%20Test%20Plan.pdf) for instructions and demos.  
+It covers almost everything below in great details
 
-### `npm start`
+## Setup 
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To install node dependencies, run `npm install` in the project directory  
+Then you should create a new google firebase project and set up according to [Manual test plan](https://github.com/NeoWu1216/firebase-blog/blob/master/test/Manual%20Test%20Plan.pdf). 
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Run
+To start the project, run `npm start` in the project directory  
+Then you can access the website from [http://localhost:3000/](http://localhost:3000/)
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Authentication
+- Unauthenticated users can sign up by providing their email and password
+- Unauthenticated users can sign in or reset password 
+- Authenticated users can signout
+- All the errors shows up correctly, and there are route guarding to prevent evil action performed by users (e.g. sign in twice)
 
-### `npm run build`
+### Blogs 
+- Anyone can view blogs, but only authenticated users can create new blog (possibly with a quota)
+- Only the blog owner can delete his/her own blog
+- Include date, author (name, avatar) link, title, and content information
+- Support raw text and html view
+- Support tabular or card view for list of blogs
+- Support search or sort operations to view specific blogs in the right order
+- Authenticated users can like a blog, which will be stored in their favorite page. This will also increase blog popularity by 1.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Comments
+- Anyone can create a new comment (including anonymous users)
+- Both the comment poster or blog owner can delete the comment
+- When a blog is deleted, all corresponding comments must be deleted (as well in firebase)
+- Include date, author link, and content information
+- Support searching or sorting opeartions to view specific comments in the right order
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### Customizations
+- Authenticated users have a main profile page, which includes all blogs or comments they posted
+- Authenticated users have an avatar, which can be configured by uploading images
+- Authenticated users can listen to music, which can be paused during session, or configured by providing a youtube id
+- Authenticated users can subscribe to another user after browsing into their profile page
+- Authenticated users have a favorite page consists of blogs they liked or users they subscribed to, which will update with new changes (e.g. blog post by users subscribed to)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Testing
+There are [selenium tests](https://github.com/NeoWu1216/firebase-blog/tree/master/test/selenium) available.  
+You should create several accounts in app, install chrome driver and update ``users.py`` accordingly.  
+After server started in [http://localhost:3000/](http://localhost:3000/), run ``python main.py`` to start test (or regression tests) 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## TODO
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Fix weird refresh update issues
+- Make a custom text editor to avoid xss attack on user-inputted html
+- Limit user activity (per day) in database
+- Cache data to avoid repeated reads
+- Walkaround youtube music autoplay in chrome
+- Deploy as firebase app if no concerns
