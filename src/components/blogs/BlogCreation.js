@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { createBlog, reset } from '../redux/dispatch/BlogEvents'
 import TextArea from 'react-textarea-autosize'
 import {Redirect} from 'react-router-dom'
-import { firestoreConnect } from 'react-redux-firebase';
 
 
 class BlogCreation extends Component {
@@ -16,17 +14,8 @@ class BlogCreation extends Component {
   onInputChange=(e) => {
     this.setState({[e.target.id]:e.target.value})
   }
-
-
   onSubmit= (e) => {
     e.preventDefault();
-    const {auth, blogs} = this.props
-    let numblogs = blogs.filter((elem) => elem.authorId===auth.uid).length
-    console.log(numblogs)
-    if (numblogs >= 5) {
-      alert(numblogs + " blogs has already created. Doing so would exceed limit of " + 5 + ". Delete some blogs and retry")
-      return
-    }
     this.props.createBlog(this.state, this.props.auth);
   }
 
@@ -92,8 +81,7 @@ class BlogCreation extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
-    blog: state.blog,
-    blogs: state.firestore.ordered.blogs
+    blog: state.blog
   }
 }
 
@@ -104,9 +92,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
   
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([
-    {collection : 'blogs'}
-  ])
-)(BlogCreation)
+export default connect(mapStateToProps, mapDispatchToProps)(BlogCreation)
