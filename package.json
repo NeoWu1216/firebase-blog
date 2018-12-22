@@ -1,0 +1,59 @@
+{
+  "name": "firebase-blog",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "assert": "^1.4.1",
+    "chromedriver": "^2.43.1",
+    "date-utils": "^1.2.21",
+    "emoji-picker-textfield": "^0.2.0",
+    "geckodriver": "^1.14.1",
+    "jquery": "^3.3.1",
+    "jshint": "^2.9.6",
+    "moment": "^2.22.2",
+    "react": "^16.6.1",
+    "react-animate-on-scroll": "^2.1.5",
+    "react-bootstrap": "^0.32.4",
+    "react-bootstrap-table": "^4.3.1",
+    "react-bootstrap-table-2": "^2.10.7",
+    "react-dom": "^16.6.1",
+    "react-grid-layout": "^0.16.6",
+    "react-image": "^1.5.1",
+    "react-load-script": "0.0.6",
+    "react-player": "^1.7.0",
+    "react-redux": "^5.1.1",
+    "react-redux-firebase": "^2.2.1",
+    "react-router-dom": "^4.3.1",
+    "react-router-scroll-top": "^0.1.1",
+    "react-scripts": "2.1.1",
+    "react-select": "^2.1.1",
+    "react-table": "^6.8.6",
+    "react-textarea-autosize": "^7.1.0-1",
+    "reactstrap": "^6.5.0",
+    "redux": "^4.0.1",
+    "redux-firestore": "^0.5.8",
+    "redux-thunk": "^2.3.0",
+    "sanitize-html": "^1.19.1",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "semantic-ui-react": "^0.83.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "s-test": "mocha test"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
