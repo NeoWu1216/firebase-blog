@@ -3,11 +3,12 @@ A blog hosting web application using firebase and react.js
 
 ## Demo
 
-You can view [Manual test plan](https://github.com/NeoWu1216/firebase-blog/blob/master/test/Manual%20Test%20Plan.pdf) for instructions and demos. It covers most of things below.
+You can view [Manual test plan](https://github.com/NeoWu1216/firebase-blog/blob/master/test/Manual%20Test%20Plan.pdf) for instructions and demos.  
+It covers almost everything below in great details
 
 ## SetUp 
 
-To install node dependencies, run `npm install` in the project directory
+To install node dependencies, run `npm install` in the project directory  
 Then you should create a new google firebase project and set up according to [Manual test plan](https://github.com/NeoWu1216/firebase-blog/blob/master/test/Manual%20Test%20Plan.pdf). 
 
 ## Run
@@ -43,10 +44,11 @@ Then you can access the website from [http://localhost:3000/](http://localhost:3
 - Authenticated users have an avatar, which can be configured by uploading
 - Authenticated users can listen to music, which can be paused during session, or configured by providing a youtube id
 - Authenticated users can subscribe to another user in their profile page
-- Authenticated users have a favorite page consists of blogs they liked or users they subscribed, which will update with new changes (e.g. blog post by users subscribed to)
+- Authenticated users have a favorite page consists of blogs they liked or users they subscribed to, which will update with new changes (e.g. blog post by users subscribed to)
 
-### Testing
-There are [selenium tests](https://github.com/NeoWu1216/firebase-blog/tree/master/test/selenium) available. You should insert several accounts to test, install chrome driver and update users.py accordingly.  
+## Testing
+There are [selenium tests](https://github.com/NeoWu1216/firebase-blog/tree/master/test/selenium) available.  
+You should create several accounts in app, install chrome driver and update ``users.py`` accordingly.  
 After server started in [http://localhost:3000/](http://localhost:3000/), run ``python main.py`` to start test (or regression tests) 
 
 ## TODO
