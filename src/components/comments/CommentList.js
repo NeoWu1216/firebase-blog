@@ -65,8 +65,6 @@ export class CommentList extends Component {
               styles={{
                 control: (base, state) => ({
                   ...base,
-                  height: '34px',
-                  'min-height': '34px',
                 }),
               }}
           />

@@ -12,6 +12,7 @@ import Parallax from './components/layout/Parallax'
 import Music from './components/layout/Music'
 import Profile from './components/user/Profile'
 import Favorite from './components/layout/Favorite'
+import Background from './components/layout/Background'
 
 class App extends Component {
 
@@ -23,6 +24,7 @@ class App extends Component {
         <NavigationBar/>
         <Music/>
         
+        <Background/>
         <Switch>
           <Route exact path='/' component={DashBoard}/>
           <Route path='/signin' component={SignIn}/>

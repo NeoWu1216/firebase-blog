@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { createBlog, reset } from '../redux/dispatch/BlogEvents'
 import TextArea from 'react-textarea-autosize'
 import {Redirect} from 'react-router-dom'
+import {Message, Input, Label, Form, Button, Icon} from 'semantic-ui-react'
+
 
 
 class BlogCreation extends Component {
@@ -24,6 +26,7 @@ class BlogCreation extends Component {
 
   render() {
     const {auth, blog} = this.props;
+    const {title, content} = this.state;
     const status = blog.status;
     if (!auth.uid) return <Redirect to='/signin'/>
     if (status==='Success') {
@@ -34,44 +37,37 @@ class BlogCreation extends Component {
     }
 
     return (
-      <div className="container">
-        <div className="form-inline" style={{textAlign:'center'}}>
-        <h4>Creating new Blog</h4>
-        <div className = "form-group">
-            <input
-                className = "form-control"
-                type = "text"
-                id = "title"
-                placeholder = "...Title..."
-                value = {this.state.title}
-                maxLength="100"
-                style = {{textAlign:"center", marginTop:"1ex"}}
-                onChange = {this.onInputChange}
-            />
-            <TextArea 
-            id = "content"
-            style = {{marginTop:"3ex"}}
-            minRows = {6}
-            maxLength="50000"
-            value = {this.state.content}
-            onChange = {this.onInputChange} />
-            <div className = "input-field">
-            <div className='red-text'>
-                    {status ?<p> {status}</p> : null}
-              </div>
-              <button
-                  style={{marginTop: '20px'}}
-                  className="btn btn-primary"
-                  type = "button"
-                  id = "submit"
-                  onClick = {this.onSubmit}
-                  >
-                  Submit
-                  </button>
-              
-            </div>
-        </div>    
-      </div>
+      <div >
+        <div className = "container">
+          <Message
+            attached
+            header='Create a new blog below'
+          />
+          <Form className='attached segment container center'>
+          <Form.Field>
+            <Label> Title </Label>
+            <Form.Input placeholder='Place title here: '
+               type='text' 
+              id="title" value={title} onChange={this.onInputChange}/>
+          </Form.Field>
+            <Form.Field>
+              <Label> Content </Label>
+              <TextArea placeholder='Place content here: '
+                id="content" value={content} onChange={this.onInputChange} />
+            </Form.Field>
+            <hr />
+            <Button color='blue' onClick={this.onSubmit}>Submit</Button>
+          </Form>
+          { status ? 
+          <Message attached='bottom' negative>
+              {status}
+          </Message> :
+          <Message attached='bottom' warning>
+            <Icon name='help' />
+            Change your mind? Go back to home and draft won't be saved.
+          </Message>
+          }
+        </div>
       </div>
     )
   }

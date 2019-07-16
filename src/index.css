@@ -30,3 +30,20 @@ code {
 /* form{
   padding: 20px;
 } */
+
+hr {
+  border: white;
+}
+
+/* .card :hover {
+  border-style: groove;
+  border-color: coral;
+  border-width: 3px;
+}
+
+.card {
+  transition: 0.5s all ease;
+} */
+
+
+@import url('https://fonts.googleapis.com/css?family=Literata&display=swap');

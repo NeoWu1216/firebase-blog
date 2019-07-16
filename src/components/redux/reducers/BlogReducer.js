@@ -35,7 +35,8 @@ const blogReducer = (state = defaultState, action) => {
             console.log('action', action)
             return {
                 ...state,
-                status : 'liked'
+                status : 'liked',
+                id : action.id
             }
         case 'LIKE_ERROR':
             alert('Error in Like: '+action.err.message)
@@ -46,7 +47,8 @@ const blogReducer = (state = defaultState, action) => {
             console.log('action', action)
             return {
                 ...state,
-                status : 'disliked'
+                status : 'disliked',
+                id : null
             }
         case 'DISLIKE_ERROR':
             alert('Error in DisLike: '+action.err.message)

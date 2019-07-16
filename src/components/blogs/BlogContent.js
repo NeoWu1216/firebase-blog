@@ -14,7 +14,7 @@ import Parallax from '../layout/Parallax'
 import React, {Component, PureCompoennt } from 'react'
 
 const notFound = <div className='container' style={{textAlign:'center'}}>
-                          <h4 > .........Not Yet Found......... </h4>
+                          <h1 > Post not found. This can be a delete post. </h1>
                           <img src={logo} className="App-logo" alt="logo" />
                         </div>
 
@@ -40,25 +40,30 @@ class BlogContent extends Component {
     // console.log(this.state.likeId, this.props.blog.id, this.props.auth.uid)
     this.props.like(this.state.likeId, this.props.blog.id, this.props.auth.uid, count)
   }
+
   render() {
       const {blog, users, likes, auth, blogReducer} = this.props;
       if  (blog==null || blog==undefined) 
-        return notFound
-      if (!reloaded && (blogReducer.status === 'disliked' || blogReducer.status=== 'liked')) {
+        return notFound;
+      if (blogReducer.status === 'disliked' || blogReducer.status=== 'liked') {
         this.props.reset();
-        reloaded = true;
+        // this.setState({likeId : blogReducer.id})
         window.location.reload();
       } 
       console.log(this.props, this.state)
-      const {likeId, html} = this.state;
-      const blogLikes = blog && likes && likes.filter((elem) => elem.blogId == blog.id)
-      const like = blogLikes && blogLikes.filter((elem) => elem.userId == auth.uid)
-      const currLikeId = (like && like.length) ? (like[0].id) : undefined;
-      if (currLikeId !== likeId)
-        this.setState({likeId:currLikeId})
-      const likeButtonURL = likeId ? require('../img/like.png') : require('../img/dislike.jpg')
-    
+      let {likeId, html} = this.state;
       
+      if (likeId === undefined) {
+        const blogLikes = blog && likes && likes.filter((elem) => elem.blogId == blog.id)
+        const like = blogLikes && blogLikes.filter((elem) => elem.userId == auth.uid)
+        likeId = like ? (like.length ? like[0].id : null) : undefined
+        if (likeId !== undefined) {
+          this.setState({likeId})
+        }
+      }
+
+
+      const likeButtonURL = likeId ? require('../img/like.png') : require('../img/dislike.jpg')
 
       const avatarURL = (blog && blog.authorId && users[blog.authorId] && users[blog.authorId].avatarURL) ? 
             users[blog.authorId].avatarURL : 'https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg'

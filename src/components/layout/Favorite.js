@@ -21,7 +21,7 @@ class Favorite extends Component {
     if (!blogs || !this.props.likes || !users || !subscriptions) return <div></div>
     let likes = this.props.likes.filter(x => x.userId===auth.uid)
     let subs = subscriptions.filter(x=>x.subscriberId==auth.uid)
-    let backgroundImage = "url("+require("../img/sky.jpg")+")"
+    let backgroundImage = "url("+require("../img/background2.jpg")+")"
     //"#51005d" "#4080bf"
     let background = "#9c27b0"
 

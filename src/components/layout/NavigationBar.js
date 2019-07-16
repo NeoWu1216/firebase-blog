@@ -12,7 +12,7 @@ class NavigationBar extends Component {
     const authlinks = (auth.uid==null) ? <SignInLinks/> : <SignOutLinks profile={profile}/>;
 
     return (
-      <nav className="nav-wrapper purple">
+      <nav className="nav-wrapper pink">
         <div className="container">
           <div className='left'>
             <NavLink id='home-link' to='/' className='left brand-logo' >XSSBlog</NavLink>

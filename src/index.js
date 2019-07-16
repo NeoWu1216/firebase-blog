@@ -10,6 +10,7 @@ import rthunk from 'redux-thunk'
 import {reactReduxFirebase, getFirebase} from 'react-redux-firebase'
 import {reduxFirestore, getFirestore} from 'redux-firestore'
 import config from './firebase/FirebaseConfig'
+import 'semantic-ui-css/semantic.min.css'
 
 
 const middleware = applyMiddleware(rthunk.withExtraArgument({getFirebase, getFirestore}))

@@ -10,6 +10,8 @@ import BlogList from '../blogs/BlogList'
 import {CommentList} from '../comments/CommentList' //not a typo, must be passed directly
 import Avatar from "./Avatar";
 import {subscribe, fetchSubId, resetSub} from '../redux/dispatch/PreferenceEvents'
+import Parallax from '../layout/Parallax'
+
 
 let prevState = {
     page : 1
@@ -93,7 +95,13 @@ class Profile extends Component {
                 case 0:
                     return <Preferences profile={profile}/>
                 case 1:
-                    return (authorBlogs.length > 0) ? <BlogList blogs={authorBlogs}/> : <h3>No Blogs found for {users[uid].nickName}</h3>
+                    return (authorBlogs.length > 0) ? 
+                        (<div>
+                            <h1>{(auth.uid===uid) ? "My Blogs" : 
+                                (this.props.users[uid].nickName+"'s Blogs")}</h1>
+                            <BlogList blogs={authorBlogs}/>
+                        </div>) 
+                        : <h3>No Blogs found for {users[uid].nickName}</h3>
                 case 2:
                     return <CommentList comments={authorComments}/>
                 case 3:
@@ -103,16 +111,16 @@ class Profile extends Component {
         //marginBottom: -10 != marginTop : 10
         return (
             <div>
-            <nav className="nav-wrapper purple" >
+            <nav className="nav-wrapper pink" style={{marginBottom: "5vh"}}>
                 <div className="container">
                     {/* <div className='left'>
-                        <div className='left brand-logo' > {profile.nickName} </div>
+                        <div className='left brand-logo' > {(auth.uid===uid) ? "My profile" : this.props.users[uid].nickName+"'s profile"} </div>
                     </div> */}
                     <ul className='right'  >
                         {(auth.uid!==uid) && subscribeButton}
-                        <li><NavLink to='/'>
+                        {/* <li><NavLink to='/'>
                             Home
-                        </NavLink></li>
+                        </NavLink></li> */}
                         <li onClick={this.goToPage(1)} id="blogs">
                           <a> Blogs </a>
                         </li>
@@ -131,7 +139,10 @@ class Profile extends Component {
             </nav>
 
 
-            <div className="container">{content}    </div>
+                <div className="container">
+                    {content}   
+                </div>
+                <Parallax/>
             </div>
 
             // Alternatively use NavBar from react-bootstrap

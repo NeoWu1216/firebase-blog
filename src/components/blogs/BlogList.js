@@ -108,7 +108,7 @@ export default class BlogList extends Component {
     return (
       
       <div>
-          <form style={{marginTop:"5ex"}}>
+          <form style={{marginTop:"3vh", marginBottom:"3vh"}}>
           {/* <i class = "fas fa-search" style={{float: 'left'}}/> */}
 
             <input
@@ -128,8 +128,6 @@ export default class BlogList extends Component {
               styles={{
                 control: (base, state) => ({
                   ...base,
-                  height: '34px',
-                  'min-height': '34px',
                 }),
               }}
           />

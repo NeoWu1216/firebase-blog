@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {NavLink, withRouter} from 'react-router-dom'
-import {Card, Button, CardTitle, CardText,CardSubtitle, CardBody } from 'reactstrap';
 import {connect} from 'react-redux';
 import {compose} from 'redux'
 import {deleteBlog, likeBlog} from '../redux/dispatch/BlogEvents'
@@ -8,12 +7,21 @@ import {firestoreConnect} from 'react-redux-firebase'
 import moment from 'moment'
 import {TableHeaderColumn, BootstrapTable} from 'react-bootstrap-table'
 import ScrollAnimation from 'react-animate-on-scroll';
+import {Button, Card, Icon, Container, Label, Popup} from 'semantic-ui-react'
+import BlogCard from './BlogCard'
 
 
 class BlogSummary extends Component {
-  onSubmit = (id, uid, authUid) => (e) => {
+
+  onRead = (id) => (e) => {
+    this.props.history.push('/blog/'+id)
+  }
+
+
+  onSubmit = (id, uid) => (e) => {
+    const {auth} = this.props;
     e.preventDefault();
-    if (uid !== authUid) {
+    if (uid !== auth.uid) {
       alert('Error: Missing or insufficient permissions')
       return;
     } else {
@@ -25,39 +33,26 @@ class BlogSummary extends Component {
     }
   }
 
+  redirectProfile = (uid) => (e) => {
+    this.props.history.push('/user/'+uid);
+  }
+
   render() {
     const {blogs, auth, table} = this.props;
     if (!blogs) return <div/>;
-    return (!table ? ( <div>
+    return (!table ? ( <Card.Group itemsPerRow={1}>
         {blogs.map(blog =>
         // <ScrollAnimation animateIn="fadeIn" animateOnce>
-          <NavLink key={blog.id} to={'/blog/'+blog.id}>
-            <Card id={blog.id}  style={{padding:'2ex'}}>
-              <p id={"delete "+blog.id} className="right" onClick={this.onSubmit(blog.id, auth.uid, blog.authorId)}>x</p>
-              <CardBody>
-                <CardTitle>{blog.title} </CardTitle> 
-                <CardSubtitle>{"Author: "+blog.author}</CardSubtitle>
-                <CardText>{blog.createdAt} </CardText>
-                <CardText>{blog.content.substring(0,70)+'...'}</CardText>
-                <CardSubtitle className="right">  
-                  <img src={require('../img/like.png')} width="15" height="15"></img>
-                  { }  {blog.popularity || 0}
-                </CardSubtitle>
-                <Button>Read more...</Button>
-              </CardBody>
-            </Card>
-          </NavLink>
+          <BlogCard blog={blog} 
+            onRead={this.onRead} 
+            onDelete={this.onSubmit} 
+            redirectProfile={this.redirectProfile}
+            canDelete={auth.uid == blog.authorId}
+            key = {blog.id}
+          />
           // </ScrollAnimation>
         )}
-    </div>) : (
-
-      // <BootstrapTable
-      //   data={blogs}
-      //   striped
-      // >
-      // <TableHeaderColumn dataField="id" isKey></TableHeaderColumn>
-      // <TableHeaderColumn dataField="title" dataAlign="right">Product ID</TableHeaderColumn>
-      // </BootstrapTable>
+    </Card.Group>) : (
 
 
       <table style={{borderSpacing: "30px"}}>
@@ -78,8 +73,9 @@ class BlogSummary extends Component {
               <td> <NavLink to={'/blog/'+blog.id} id={blog.id}> {blog.title} </NavLink></td>
               <td>{blog.createdAt}</td>
               <td> </td>
+              {auth.uid == blog.authorId ?
               <td> <a style={{cursor : 'pointer'}} id={"delete "+blog.id} 
-              onClick={this.onSubmit(blog.id, auth.uid, blog.authorId)}> x </a> </td>
+              onClick={this.onSubmit(blog.id, auth.uid, blog.authorId)}> x </a> </td> : null}
             </tr>
             // </NavLink>
           )}
@@ -98,7 +94,13 @@ const mapStateToProps = (state, oldProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteBlog : (id) => dispatch(deleteBlog(id)),
+    like : (p1,p2,p3,p4) => dispatch(likeBlog(p1,p2,p3,p4)),
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogSummary));
+export default withRouter(compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([
+    {collection : 'likes'},
+  ])
+)(BlogSummary));
